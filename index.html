@@ -170,7 +170,7 @@
       const total = questions.length;
       const solved = questions.filter((_, i) => localStorage.getItem(`q-${i}`) === "true").length;
       const remaining = total - solved;
-      statusEl.textContent = `✅ Solved: ${solved} | ❌ Remaining: ${remaining}`;
+      statusEl.textContent = `🔥 Total ${solved + remaining} | ✅ Solved: ${solved} | ❌ Remaining: ${remaining}`;
     }
 
     questions.forEach((q, index) => {
