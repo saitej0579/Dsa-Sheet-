@@ -38,8 +38,20 @@
     .status {
       text-align: center;
       font-size: 1.1rem;
-      margin-bottom: 30px;
+      margin-bottom: 20px;
       color: var(--subtext);
+    }
+
+    .change-name-btn {
+      display: block;
+      margin: 0 auto 30px;
+      padding: 6px 14px;
+      font-size: 1rem;
+      background-color: var(--primary);
+      border: none;
+      color: white;
+      border-radius: 5px;
+      cursor: pointer;
     }
 
     ul {
@@ -113,9 +125,10 @@
 </head>
 <body>
   <div class="container">
-    <h1>SAITEJ</h1>
+    <h1 id="user-name-heading">Loading...</h1>
     <h1>Interview Master - DSA Checklist</h1>
     <div class="status" id="progress-tracker">Loading...</div>
+    <button class="change-name-btn" onclick="changeName()">Change Name</button>
     <ul id="dsa-list"></ul>
   </div>
 
@@ -123,6 +136,33 @@
   <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
 
   <script>
+    // Load and display name
+    function setName() {
+      let name = localStorage.getItem("userName");
+      const heading = document.getElementById("user-name-heading");
+
+      if (!name) {
+        name = prompt("Enter your name:");
+        if (name) {
+          localStorage.setItem("userName", name);
+        } else {
+          name = "Anonymous";
+        }
+      }
+
+      heading.textContent = name;
+    }
+
+    // Change name manually
+    function changeName() {
+      const newName = prompt("Enter your new name:");
+      if (newName) {
+        localStorage.setItem("userName", newName);
+        document.getElementById("user-name-heading").textContent = newName;
+      }
+    }
+
+    // DSA Questions
     const questions = [
       "Two Sum [Solution]", "Valid Parentheses [Solution]", "Merge Two Sorted Lists [Solution]",
       "Best Time to Buy and Sell Stock [Solution]", "Valid Palindrome [Solution]",
@@ -173,6 +213,7 @@
       statusEl.textContent = `🔥 Total ${solved + remaining} | ✅ Solved: ${solved} | ❌ Remaining: ${remaining}`;
     }
 
+    // Render question list
     questions.forEach((q, index) => {
       const id = `q-${index}`;
       const saved = localStorage.getItem(id) === "true";
@@ -232,6 +273,7 @@
       listEl.appendChild(li);
     });
 
+    setName();
     updateProgress();
   </script>
 </body>
